@@ -4,16 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
+flask = "==3.*"
 
 [dev-packages]
-black = "*"
-pylint = "*"
-mypy = "*"
-pytest = "*"
-invoke = "*"
-coverage = "*"
-python-dotenv = "*"
+black = "==24.*"
+pylint = "==3.*"
+mypy = "==1.*"
+pytest = "==8.*"
+invoke = "==2.*"
+coverage = "==7.*"
+python-dotenv = "==1.*"
 
 [requires]
 python_version = "3.12"
