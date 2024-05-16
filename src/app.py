@@ -4,25 +4,34 @@ Set up API routes.
 """
 
 # Built-in libraries:
-import logging
 import os
 import subprocess
 
 # Third-party dependencies:
 from flask import Flask
+from flask import redirect
+from flask import render_template
 
-# Configure logger.
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# In-house code:
+from . import logger
+from .affiliation import Affiliation
 
 app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
-    """A cheeky hello world route."""
+def index():
+    """Index route."""
     logger.info("User accessed /")
-    return "<p>Look on my Affiliations Service, ye Mighty, and despair!</p>"
+    return redirect("/affiliations")
+
+
+@app.route("/affiliations")
+def affiliations():
+    """The affiliations home page."""
+    logger.info("User accessed /affiliations")
+    affiliations_set = Affiliation.all()
+    return render_template("index.html", affiliations=affiliations_set)
 
 
 @app.route("/sha")

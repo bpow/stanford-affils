@@ -1,5 +1,10 @@
 name: continuous integration
 on: [push, pull_request]
+# These keys should match the keys in .env.template
+env:
+  SOME_VAR: "Test"
+  AFFILS_DB_NAME: "affils.db"
+  AFFILS_DB_FILE: "${{ github.workspace }}/affils.db"
 permissions:
   contents: read
 jobs:
@@ -15,6 +20,8 @@ jobs:
         run: pip install pipenv --user
       - name: install dependencies
         run: pipenv sync --dev # Installs all deps, including dev deps, from Pipfile.lock.
+      - name: seed the database
+        run: pipenv run invoke dbseed
       - name: Format
         run: pipenv run invoke fmt
       - name: lint

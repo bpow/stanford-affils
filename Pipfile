@@ -14,6 +14,7 @@ pytest = "==8.*"
 invoke = "==2.*"
 coverage = "==7.*"
 python-dotenv = "==1.*"
+sqlfluff = "*"
 
 [requires]
 python_version = "3.12"

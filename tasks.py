@@ -9,15 +9,12 @@ from dotenv import dotenv_values
 from invoke import task
 
 # Environment variable files:
-ENV_TRUTH = ".env.template"  # The source of truth for all .env files.
-ENV_LOCAL = ".env.local"
-ENV_PROD = ".env.prod"
+ENV_TEMPLATE = ".env.template"
+ENV_ACTUAL = ".env"
 
 # Configs:
-TRUTH_CONFIG = dotenv_values(ENV_TRUTH)
-LOCAL_CONFIG = dotenv_values(ENV_LOCAL)
-PROD_CONFIG = dotenv_values(ENV_PROD)
-CONFIGS = [LOCAL_CONFIG, PROD_CONFIG]
+TEMPLATE_CONF = dotenv_values(ENV_TEMPLATE)
+ACTUAL_CONF = dotenv_values(ENV_ACTUAL)
 
 
 @task
@@ -45,23 +42,91 @@ def test(c):
 
 
 @task
+def sqlschema(c):
+    """Generate a schema SQL script.
+
+    This script will create the necessary table(s) and columns.
+
+    This task assumes you are in the root directory of the repo.
+    """
+    c.run(
+        f"sqlite3 {ACTUAL_CONF.get("AFFILS_DB_NAME", "affils.db")} .schema > ./src/sql/schema.sql"
+    )
+
+
+@task
+def sqldump(c):
+    """Generate a dump SQL script.
+
+    This script can be used to seed the DB with some values.
+
+    This task assumes you are in the root directory of the repo.
+    """
+    c.run(
+        f"sqlite3 {ACTUAL_CONF.get("AFFILS_DB_NAME", "affils.db")} .dump > ./src/sql/dump.sql"
+    )
+
+
+@task
+def sqlfmt(c):
+    """Format the SQL scripts."""
+    c.run("sqlfluff format --dialect sqlite")
+
+
+@task
+def sqlfix(c):
+    """Attempt to auto-fix SQL scripts."""
+    c.run("sqlfluff fix --dialect sqlite")
+
+
+@task
+def sqllint(c):
+    """Lint the SQL scripts."""
+    c.run("sqlfluff lint --dialect sqlite")
+
+
+@task
 def envsame(c):
-    """Ensure environment variable keys match in each .env file."""
-    for config in CONFIGS:
-        if config.keys() != TRUTH_CONFIG.keys():
-            print(".env keys do not match. Check your .env files.")
-            exit(1)
+    """Ensure environment variable keys match."""
+    if TEMPLATE_CONF.keys() != ACTUAL_CONF.keys():
+        print(".env keys do not match. Check your .env files.")
+        exit(1)
 
 
-@task(pre=[fmt, lint, types, test, envsame])
+@task(pre=[fmt, lint, types, test, sqlfmt, sqlfix, sqllint, envsame])
 def check(c):
     """Run all code checks."""
+
+
+@task
+def dbmake(c):
+    """Create the affiliations database if it doesn't exist.
+
+    This task assumes you are in the root directory of the repo.
+    """
+    # Here we don't use the environment variable for the database name
+    # because we want to avoid complexity in GitHub Actions. (I don't
+    # want to manually add environment variables to GitHub Actions.)
+    c.run("sqlite3 affils.db < ./src/sql/schema.sql")
+
+
+@task
+def dbseed(c):
+    """Seed the affiliations database with values.
+
+    This task assumes you are in the root directory of the repo.
+    """
+    # Here we don't use the environment variable for the database name
+    # because we want to avoid complexity in GitHub Actions. (I don't
+    # want to manually add environment variables to GitHub Actions.)
+    c.run("sqlite3 affils.db < ./src/sql/dump.sql")
 
 
 @task
 def dev(c):
     """Run the development server.
 
-    Assumes you've activated the virtual environment.
+    Assumes you've activated the virtual environment. Also assumes
+    you're in the root directory.
     """
-    c.run(f"source {ENV_LOCAL} && cd src && flask run")
+    c.run(f"source {ENV_ACTUAL} && cd src && flask run")

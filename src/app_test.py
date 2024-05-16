@@ -10,17 +10,24 @@ app.config.update({"TESTING": True})
 CLIENT = app.test_client()
 
 
-def test_root():
-    """Ensure our cheeky hello world route works."""
+def test_index_route():
+    """Ensure index route redirects."""
     response = CLIENT.get("/")
+    assert response.status_code == 302
+
+
+def test_affiliations_route():
+    """Ensure index route redirects."""
+    response = CLIENT.get("/affiliations")
     assert response.status_code == 200
-    assert (
-        response.text
-        == "<p>Look on my Affiliations Service, ye Mighty, and despair!</p>"
-    )
+    assert "<table>" in response.text
+    assert "<th>ID</th>" in response.text
+    assert "<td>10000</td>" in response.text
+    assert "<th>Name</th>" in response.text
+    assert "<td>Interface Admin</td>" in response.text
 
 
-def test_sha():
+def test_sha_route():
     """Ensure we can get a SHA."""
     response = CLIENT.get("/sha")
     assert response.status_code == 200
