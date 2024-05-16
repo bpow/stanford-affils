@@ -15,6 +15,12 @@ To run these checks:
 inv check
 ```
 
+## Style your code
+
+Defer to the formatter (Black) and the linter (pylint). If neither of
+them have an opinion, refer to
+[Google's Python style guide](https://google.github.io/styleguide/pyguide.html).
+
 ## Write code that can be submitted to the main branch
 
 - Must pass the `check` script.
