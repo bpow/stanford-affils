@@ -22,7 +22,7 @@ jobs:
         run: pipenv sync --dev # Installs all deps, including dev deps, from Pipfile.lock.
       - name: seed the database
         run: pipenv run invoke dbseed
-      - name: Format
+      - name: format
         run: pipenv run invoke fmt
       - name: lint
         run: pipenv run invoke lint
