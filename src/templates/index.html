@@ -4,6 +4,7 @@
         <table>
             <thead>
             <tr>
+                <th>Links</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Coordinator</th>
@@ -14,12 +15,15 @@
                 <th>Members</th>
                 <th>Approvers</th>
                 <th>ClinVar Submitter IDs</th>
-                <th>Links</th>
             </tr>
             </thead>
             <tbody>
             {% for affiliation in affiliations %}
                 <tr>
+                    <td>
+                        <a href="/affiliation/{{ affiliation.id }}/edit">Edit</a>
+                        <a href="/affiliation/{{ affiliation.id }}">View</a>
+                    </td>
                     <td>{{ affiliation.id }}</td>
                     <td>{{ affiliation.name }}</td>
                     <td>{{ affiliation.coordinator }}</td>
@@ -30,10 +34,6 @@
                     <td>{{ affiliation.members }}</td>
                     <td>{{ affiliation.approvers }}</td>
                     <td>{{ affiliation.clinvar_submitter_ids }}</td>
-                    <td>
-                        <a href="/affiliation/{{ affiliation.id }}/edit">Edit</a>
-                        <a href="/affiliation/{{ affiliation.id }}">View</a>
-                    </td>
                 </tr>
             {% endfor %}
             </tbody>
