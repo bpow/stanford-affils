@@ -1,40 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Coordinator</th>
-            <th>Coordinator Email</th>
-            <th>Status</th>
-            <th>Type</th>
-            <th>Family</th>
-            <th>Members</th>
-            <th>Approvers</th>
-            <th>ClinVar Submitter IDs</th>
-            <th>Links</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for affiliation in affiliations %}
+    <div class="scrollable">
+        <table>
+            <thead>
             <tr>
-                <td>{{ affiliation.id }}</td>
-                <td>{{ affiliation.name }}</td>
-                <td>{{ affiliation.coordinator }}</td>
-                <td>{{ affiliation.coordinator_email }}</td>
-                <td>{{ affiliation.status }}</td>
-                <td>{{ affiliation.type }}</td>
-                <td>{{ affiliation.family }}</td>
-                <td>{{ affiliation.members }}</td>
-                <td>{{ affiliation.approvers }}</td>
-                <td>{{ affiliation.clinvar_submitter_ids }}</td>
-                <td>
-                    <a href="/affiliation/{{ affiliation.id }}/edit">Edit</a>
-                    <a href="/affiliation/{{ affiliation.id }}">View</a>
-                </td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Coordinator</th>
+                <th>Coordinator Email</th>
+                <th>Status</th>
+                <th>Type</th>
+                <th>Family</th>
+                <th>Members</th>
+                <th>Approvers</th>
+                <th>ClinVar Submitter IDs</th>
+                <th>Links</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for affiliation in affiliations %}
+                <tr>
+                    <td>{{ affiliation.id }}</td>
+                    <td>{{ affiliation.name }}</td>
+                    <td>{{ affiliation.coordinator }}</td>
+                    <td>{{ affiliation.coordinator_email }}</td>
+                    <td>{{ affiliation.status }}</td>
+                    <td>{{ affiliation.type }}</td>
+                    <td>{{ affiliation.family }}</td>
+                    <td>{{ affiliation.members }}</td>
+                    <td>{{ affiliation.approvers }}</td>
+                    <td>{{ affiliation.clinvar_submitter_ids }}</td>
+                    <td>
+                        <a href="/affiliation/{{ affiliation.id }}/edit">Edit</a>
+                        <a href="/affiliation/{{ affiliation.id }}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

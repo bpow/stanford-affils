@@ -713,3 +713,12 @@ sub {
 .error {
   color: red;
 }
+
+/* Class that allows us to have a horizontal scrollbar for a table. */
+.scrollable {
+  border-radius: var(--standard-border-radius);
+  border: 2px solid var(--border);
+  margin: 2rem 0;
+  overflow-x: auto;
+  padding: 1.5rem;
+}
