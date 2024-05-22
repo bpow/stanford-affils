@@ -46,7 +46,7 @@ def test_signup_route():
 
 
 def test_sha_route():
-    """Ensure we can get a SHA."""
+    """Ensure we can get a Git SHA."""
     response = CLIENT.get("/sha")
     assert response.status_code == 200
     assert len(response.text) == 40  # SHA-1 is 40 characters in length.
