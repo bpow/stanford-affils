@@ -85,10 +85,3 @@ def current_git_sha():
     # Strip newline character from the end of the string.
     sha = output[0 : len(output) - 1]
     return sha
-
-
-@app.route("/env")
-def display_env_var():
-    """Displays environment variable for testing purposes."""
-    logger.info("User accessed /env")
-    return os.environ.get("SOME_VAR")

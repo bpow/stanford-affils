@@ -2,7 +2,6 @@ name: continuous integration
 on: [push, pull_request]
 # These keys should match the keys in .env.template
 env:
-  SOME_VAR: "Test"
   AFFILS_DB_NAME: "affils.db"
   AFFILS_DB_FILE: "${{ github.workspace }}/affils.db"
   AFFILS_SECRET_KEY: "gottaPutSomethingHereSoGitHubActionsWorks"
