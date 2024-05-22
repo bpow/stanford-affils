@@ -6,32 +6,72 @@ Set up API routes.
 # Built-in libraries:
 import os
 import subprocess
+import sys
 
 # Third-party dependencies:
-from flask import Flask
-from flask import redirect
-from flask import render_template
+from flask import (
+    Flask,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
 
 # In-house code:
 from . import logger
 from .affiliation import Affiliation
 
 app = Flask(__name__)
+if "AFFILS_SECRET_KEY" in os.environ:
+    app.secret_key = os.environ.get("AFFILS_SECRET_KEY")
+else:
+    logger.error("Unable to find secret key; check your .env file")
+    sys.exit(1)
 
 
 @app.route("/")
 def index():
-    """Index route."""
-    logger.info("User accessed /")
-    return redirect("/affiliations")
-
-
-@app.route("/affiliations")
-def affiliations():
     """The affiliations home page."""
-    logger.info("User accessed /affiliations")
+    logger.info("User accessed /")
+    # A note on cookie-based sessions: Flask will take the values you
+    # put into the session object and serialize them into a cookie. If
+    # you are finding some values do not persist across requests,
+    # cookies are indeed enabled, and you are not getting a clear error
+    # message, check the size of the cookie in your page responses
+    # compared to the size supported by web browsers.
+    email = session["email"] if "email" in session else None
     affiliations_set = Affiliation.all()
-    return render_template("index.html", affiliations=affiliations_set)
+    return render_template("index.html", affiliations=affiliations_set, email=email)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """The login route.
+
+    Either redirect a logged-in user to the home page or show the user
+    a login form.
+    """
+    logger.info("User accessed /login")
+    if request.method == "POST":
+        session["email"] = request.form["email"]
+        return redirect(url_for("index"))
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    """Log the user out."""
+    logger.info("User accessed /logout")
+    session.pop("email", None)
+    return redirect(url_for("index"))
+
+
+@app.route("/signup")
+def signup():
+    """Show the user sign-up instructions."""
+    logger.info("User accessed /signup")
+    return render_template("signup.html")
 
 
 @app.route("/sha")

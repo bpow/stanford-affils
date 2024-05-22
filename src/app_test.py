@@ -13,18 +13,36 @@ CLIENT = app.test_client()
 def test_index_route():
     """Ensure index route redirects."""
     response = CLIENT.get("/")
-    assert response.status_code == 302
-
-
-def test_affiliations_route():
-    """Ensure index route redirects."""
-    response = CLIENT.get("/affiliations")
     assert response.status_code == 200
     assert "<table>" in response.text
     assert "<th>ID</th>" in response.text
     assert "<td>10000</td>" in response.text
     assert "<th>Name</th>" in response.text
     assert "<td>Interface Admin</td>" in response.text
+
+
+def test_login_route():
+    """Ensure we see inputs for email and password."""
+    response = CLIENT.get("/login")
+    assert response.status_code == 200
+    assert '<input id="email"' in response.text
+    assert '<input id="password"' in response.text
+
+
+def test_logout_route():
+    """Ensure we redirect to the index."""
+    response = CLIENT.get("/logout")
+    assert response.status_code == 302
+
+
+def test_signup_route():
+    """Ensure we see instructions for signing up.
+
+    Specifically, we hope to see a link to curation.clinicalgenome.org
+    because we are using their user authentication service.
+    """
+    response = CLIENT.get("/signup")
+    assert 'href="https://curation.clinicalgenome.org/"' in response.text
 
 
 def test_sha_route():

@@ -9,7 +9,6 @@ from typing import List, Optional
 from . import logger
 
 DB_FILE = os.environ.get("AFFILS_DB_FILE")
-print(DB_FILE)
 
 
 class Affiliation:
@@ -66,7 +65,6 @@ class Affiliation:
     def all(cls) -> Optional[List]:
         """Return all affiliations in the database."""
         all_affiliations = []
-        print(DB_FILE)
         con = sqlite3.connect(DB_FILE)  # type: ignore
         cur = con.cursor()
         try:
