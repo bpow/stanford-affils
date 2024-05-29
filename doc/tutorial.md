@@ -9,3 +9,4 @@
 5. Create a `.env` file based on `.env.template`.
 6. Seed the database: `inv dbseed`.
 7. Run the development server: `inv dev`.
+8. Install [yamlfmt](https://github.com/google/yamlfmt): `brew install yamlfmt`
