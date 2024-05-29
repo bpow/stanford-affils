@@ -7,5 +7,5 @@
 3. Activate a virtual environment: `pipenv shell`.
 4. Install dependencies: `pipenv sync --dev`.
 5. Create a `.env` file based on `.env.template`.
-6. Seed the database: `inv dbseed`
+6. Seed the database: `inv dbseed`.
 7. Run the development server: `inv dev`.
