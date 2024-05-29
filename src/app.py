@@ -23,8 +23,8 @@ from . import logger
 from .affiliation import Affiliation
 
 app = Flask(__name__)
-if "AFFILS_SECRET_KEY" in os.environ:
-    app.secret_key = os.environ.get("AFFILS_SECRET_KEY")
+if "AFFILS_FLASK_SECRET_KEY" in os.environ:
+    app.secret_key = os.environ.get("AFFILS_FLASK_SECRET_KEY")
 else:
     logger.error("Unable to find secret key; check your .env file")
     sys.exit(1)

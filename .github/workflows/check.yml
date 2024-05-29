@@ -4,7 +4,7 @@ on: [push, pull_request]
 env:
   AFFILS_DB_NAME: "affils.db"
   AFFILS_DB_FILE: "${{ github.workspace }}/affils.db"
-  AFFILS_SECRET_KEY: "gottaPutSomethingHereSoGitHubActionsWorks"
+  AFFILS_FLASK_SECRET_KEY: "gottaPutSomethingHereSoGitHubActionsWorks"
 permissions:
   contents: read
 jobs:
