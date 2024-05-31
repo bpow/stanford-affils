@@ -21,6 +21,7 @@ from flask import (
 # In-house code:
 from . import logger
 from .affiliation import Affiliation
+from .user import User
 
 app = Flask(__name__)
 if "AFFILS_FLASK_SECRET_KEY" in os.environ:
@@ -54,7 +55,8 @@ def login():
     """
     logger.info("User accessed /login")
     if request.method == "POST":
-        session["email"] = request.form["email"]
+        user = User(request.form["email"], request.form["password"])
+        user.login()
         return redirect(url_for("index"))
     return render_template("login.html")
 

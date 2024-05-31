@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "==3.*"
+boto3 = "*"
 
 [dev-packages]
 black = "==24.*"
@@ -15,6 +16,7 @@ invoke = "==2.*"
 coverage = "==7.*"
 python-dotenv = "==1.*"
 sqlfluff = "*"
+boto3-stubs = {extras = ["essential"], version = "*"}
 
 [requires]
 python_version = "3.12"

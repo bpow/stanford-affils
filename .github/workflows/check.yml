@@ -5,6 +5,7 @@ env:
   AFFILS_DB_NAME: "affils.db"
   AFFILS_DB_FILE: "${{ github.workspace }}/affils.db"
   AFFILS_FLASK_SECRET_KEY: "gottaPutSomethingHereSoGitHubActionsWorks"
+  AFFILS_AWS_REGION: "us-west-2"
 permissions:
   contents: read
 jobs:
