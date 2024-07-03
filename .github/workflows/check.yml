@@ -24,7 +24,7 @@ jobs:
       - name: seed the database
         run: pipenv run invoke dbseed
       - name: format
-        run: pipenv run invoke fmt
+        run: pipenv run invoke fmtcheck
       - name: lint
         run: pipenv run invoke lint
       - name: check types
