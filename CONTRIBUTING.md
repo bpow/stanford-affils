@@ -1,73 +1,54 @@
-# How-to guides
+# Contributing Guidelines
 
-## Run code checks
+Contributing and pull requests are welcome. If you would like to contribute,
+please open an issue first to discuss that changes that you would like made.
+Then follow the below documentation expectations.
 
-Code should be:
-
-1. automatically formatted using [Black](https://github.com/psf/black),
-2. linted using [Pylint](https://github.com/pylint-dev/pylint),
-3. type-checked using [mypy](https://mypy-lang.org/), and
-4. tested using [Pytest](https://github.com/pytest-dev/pytest/).
-
-To run these checks:
-
-```
-inv check
-```
-
-## Style your code
-
-Defer to the formatter (Black) and the linter (pylint). If neither of them have
-an opinion, refer to
-[Google's Python style guide](https://google.github.io/styleguide/pyguide.html).
-
-## Write code that can be submitted to the main branch
-
-- Must pass the `check` script.
-- New code must have automated tests.
-- New code must have docstrings.
-- If adding a new tool or something that other developers need to understand,
-  there must be a tutorial for it.
-- If a manual process is being added, there must be a how-to guide for it.
-- If changing something significant (e.g. architecture) there should be a
-  written explanation.
-- If doing something complex or weird, there should be an explanation for it.
-
-## Conform to best practices
+## Best Practices
 
 See our Gecko Group developer best practices spreadsheet
 [here](https://docs.google.com/spreadsheets/d/1MLeEQE-v3eEnEtKNG4oJ8q6a8pal9q462TTgVcodcg4/edit?pli=1#gid=0).
-We are also working toward conforming to OpenSSF Best Practices. See
-[this page](https://www.bestpractices.dev/en/projects/8941) for more info.
+We are also working toward conforming to OpenSSF Best Practices.
+See [this page](https://www.bestpractices.dev/en/projects/8941) for more info.
 
-## Organize imports and constants
+## Documentation Guidelines
 
-At the top of any given module there will probably be imports and constants. Our
-preferred way of organizing them is as follows:
+- Our [how-to guides](./doc/how-to.md). How to do specific tasks
+  and documentation expectations.
 
-```
-# Built-in libraries:
-# [Built-in libraries go here.]
+## Opening an Issue
 
-# Third-party dependencies:
-# [Third-party dependencies installed via Pipenv go here.]
+Before creating a new issue, please check to see if that issue has already
+been raised.
 
-# In-house code:
-# [In-house code imports go here.]
+### Bugs / Feature Requests
 
-# Constants:
-FOO = "foo"
-BAR = 123
-```
+Please open an issue using the appropriate template detailing the issue you are
+encountering or the improvement/suggestion that you have for the Affiliation
+Service.
 
-Each of the sections should be sorted alphabetically.
+Please include any screenshots, screen recordings, and any examples with
+detailed descriptions so our developers can investigate further.
 
-## Write a TODO comment
+## Submitting Pull Requests
+
+- Please follow the [PR template](./doc/pull_request_template.md) when
+  creating your PR.
+- Smaller is better! A PR should preferably contain isolated changes
+  pertaining to a single bug fix or feature request.
+- Please follow the below coding style and conventions:
+
+### Write a TODO comment
 
 TODO comments should include the name of the person who wrote the TODO comment
 and a link to a GitHub issue describing the TODO in more depth.
 
-## Write a commit message
+### Styling your Code
+
+Defer to the formatter (Black) and the linter (pylint). If neither of them
+have an opinion, refer to [Google's Python style guide](https://google.github.io/styleguide/pyguide.html).
+
+### Write a Commit Message
 
 When writing a commit, follow the example provided here:
 
@@ -96,7 +77,7 @@ For:
 https://github.com/org/repo/issues/123
 ```
 
-## Name a Git branch
+### Name a Git Branch
 
 Here is the format we like to follow for branch names:
 
