@@ -10,7 +10,25 @@ from affiliations.models import Affiliation
 class AffiliationsAdmin(admin.ModelAdmin):
     """Configure the affiliations admin panel."""
 
-    search_fields = ["affiliation_id", "name"]
+    search_fields = ["affiliation_id", "full_name", "abbreviated_name"]
+    list_display = [
+        "affiliation_id",
+        "full_name",
+        "abbreviated_name",
+        "status",
+        "type",
+        "clinical_domain_working_group",
+    ]
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj is None:
+            return [
+                "members",
+            ]
+        return [
+            "affiliation_id",
+            "members",
+        ]
 
 
 # Add models we want to be able to edit in the admin interface.
