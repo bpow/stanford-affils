@@ -1,8 +1,9 @@
 """Admin config for the affiliations service."""
 
 # Third-party dependencies:
-from django.contrib import admin
 from django import forms
+from django.contrib import admin
+from unfold.admin import ModelAdmin # type: ignore
 
 # In-house code:
 from affiliations.models import Affiliation
@@ -59,7 +60,7 @@ class AffiliationForm(forms.ModelForm):
         }
 
 
-class AffiliationsAdmin(admin.ModelAdmin):
+class AffiliationsAdmin(ModelAdmin):
     """Configure the affiliations admin panel."""
 
     form = AffiliationForm
@@ -74,6 +75,8 @@ class AffiliationsAdmin(admin.ModelAdmin):
     ]
 
     def get_readonly_fields(self, request, obj=None):
+        """ID is editable upon creation, afterwards, it is read only"""
+        # pylint:disable=unused-argument
         if obj is None:
             return [
                 "members",
