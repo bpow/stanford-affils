@@ -3,10 +3,47 @@
 # Third-party dependencies:
 from django import forms
 from django.contrib import admin
-from unfold.admin import ModelAdmin, TabularInline, UnfoldAdminSelectWidget  # type: ignore
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+
+from unfold.forms import (  # type: ignore
+    AdminPasswordChangeForm,
+    UserChangeForm,
+    UserCreationForm,
+)
+from unfold.admin import (  # type: ignore
+    ModelAdmin,
+    TabularInline,
+    UnfoldAdminSelectWidget,
+)
 
 # In-house code:
-from affiliations.models import Affiliation, Coordinator, Approver, Submitter
+from affiliations.models import (
+    Affiliation,
+    Coordinator,
+    Approver,
+    Submitter,
+)
+
+# Unregistering base Django Admin User and Group to use Unfold User and Group
+# instead for styling purposes.
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
+
+@admin.register(User)
+class UserAdmin(BaseUserAdmin, ModelAdmin):
+    """Register Unfold user admin for styling of Users page."""
+
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+
+
+@admin.register(Group)
+class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+    """Register Unfold group admin for styling of Group page."""
 
 
 class AffiliationForm(forms.ModelForm):
@@ -66,13 +103,11 @@ class CoordinatorInlineAdmin(TabularInline):
     model = Coordinator
     extra = 1
 
-
 class ApproverInlineAdmin(TabularInline):
     """Configure the approvers admin panel."""
 
     model = Approver
     extra = 1
-
 
 class SubmitterInlineAdmin(TabularInline):
     """Configure the clinvar submitter IDs admin panel."""
@@ -132,4 +167,6 @@ class AffiliationsAdmin(ModelAdmin):
 admin.site.register(Affiliation, AffiliationsAdmin)
 
 # Change the admin site's display name.
-admin.site.site_header = "Affiliations Service Admin Panel"
+admin.site.site_title = "Affils Service"
+admin.site.site_header = "Affiliation Service Panel"
+admin.site.index_title = "Welcome to the ClinGen Affiliation Service Portal"
