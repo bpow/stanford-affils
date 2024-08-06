@@ -75,8 +75,7 @@ class AffiliationForm(forms.ModelForm):
             ),
             "type": UnfoldAdminSelectWidget(
                 choices=[
-                    ("Variant Curation Expert Panel",
-                     "Variant Curation Expert Panel"),
+                    ("Variant Curation Expert Panel", "Variant Curation Expert Panel"),
                     ("Gene Curation Expert Panel", "Gene Curation Expert Panel"),
                     ("Independent Curation Group", "Independent Curation Group"),
                 ]
@@ -91,8 +90,7 @@ class AffiliationForm(forms.ModelForm):
                     ("Immunology", "Immunology"),
                     ("Inborn Errors of Metabolism", "Inborn Errors of Metabolism"),
                     ("Kidney Disease", "Kidney Disease"),
-                    ("Neurodevelopmental Disorders",
-                     "Neurodevelopmental Disorders"),
+                    ("Neurodevelopmental Disorders", "Neurodevelopmental Disorders"),
                     ("Neurological Disorders", "Neurological Disorders"),
                     ("Ocular", "Ocular"),
                     ("Other", "Other"),
@@ -161,8 +159,7 @@ class AffiliationsAdmin(ModelAdmin):
         "type",
         "clinical_domain_working_group",
     ]
-    inlines = [CoordinatorInlineAdmin,
-               ApproverInlineAdmin, SubmitterInlineAdmin]
+    inlines = [CoordinatorInlineAdmin, ApproverInlineAdmin, SubmitterInlineAdmin]
 
     def get_readonly_fields(self, request, obj=None):
         """Fields that are editable upon creation, afterwards, are read only"""
