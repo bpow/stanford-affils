@@ -134,14 +134,14 @@ class AffiliationsAdmin(ModelAdmin):
     form = AffiliationForm
     search_fields = [
         "affiliation_id",
-        "curation_panel_id",
+        "expert_panel_id",
         "full_name",
         "abbreviated_name",
     ]
     # pylint:disable=duplicate-code
     list_display = [
         "affiliation_id",
-        "curation_panel_id",
+        "expert_panel_id",
         "full_name",
         "abbreviated_name",
         "status",
@@ -152,7 +152,7 @@ class AffiliationsAdmin(ModelAdmin):
     # pylint:disable=duplicate-code
     list_display_links = [
         "affiliation_id",
-        "curation_panel_id",
+        "expert_panel_id",
         "full_name",
         "abbreviated_name",
         "status",
@@ -170,7 +170,7 @@ class AffiliationsAdmin(ModelAdmin):
             ]
         return [
             "affiliation_id",
-            "curation_panel_id",
+            "expert_panel_id",
             "members",
         ]
 
