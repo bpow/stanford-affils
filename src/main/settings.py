@@ -156,7 +156,7 @@ UNFOLD = {
     },
 }
 
-# djano-admin-logs
+# django-admin-logs
 
 # By default, Django creates log entries with the message “No fields changed”
 # when an unchanged object is saved in the admin interface. The below prevents 
