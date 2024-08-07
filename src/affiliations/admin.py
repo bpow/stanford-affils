@@ -71,6 +71,7 @@ class AffiliationForm(forms.ModelForm):
                     ("Applying", "Applying"),
                     ("Inactive", "Inactive"),
                     ("Retired", "Retired"),
+                    ("Archived", "Archived"),
                 ]
             ),
             "type": UnfoldAdminSelectWidget(
