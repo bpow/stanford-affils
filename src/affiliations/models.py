@@ -12,7 +12,7 @@ class Affiliation(models.Model):
     """
     10000 ID. All affiliations will have this ID, however, some affiliations
     will share this ID. Affiliations that share this ID will have different
-    curation_panel_ids.
+    expert_panel_ids.
     """
     affiliation_id: models.IntegerField = models.IntegerField(
         help_text="10000 number ID",
@@ -22,11 +22,11 @@ class Affiliation(models.Model):
     40000 or 50000 ID. This ID can be null as independent groups will not have
     either of these IDs.
     """
-    curation_panel_id: models.IntegerField = models.IntegerField(
+    expert_panel_id: models.IntegerField = models.IntegerField(
         blank=True,
         null=True,
         help_text="GCEP or VCEP ID. If Independent Curation Group, leave this field blank.",
-        verbose_name="Curation Panel ID",
+        verbose_name="Expert Panel ID",
     )
     full_name: models.CharField = models.CharField(verbose_name="Full Name")
     abbreviated_name: models.CharField = models.CharField(
@@ -49,10 +49,10 @@ class Affiliation(models.Model):
         else:
             if (
                 self.type == "Independent Curation Group"
-                and self.curation_panel_id is not None
+                and self.expert_panel_id is not None
             ):
                 raise ValidationError(
-                    """If type Independent Curation Group is selected, Curation Panel
+                    """If type Independent Curation Group is selected, Expert Panel
                     ID must be left blank."""
                 )
             if self.affiliation_id < 10000 or self.affiliation_id >= 20000:
@@ -61,20 +61,20 @@ class Affiliation(models.Model):
                     Please include a valid Affiliation ID."""
                 )
             if self.type == "Gene Curation Expert Panel":
-                if self.curation_panel_id is None or (
-                    self.curation_panel_id < 40000 or self.curation_panel_id >= 50000
+                if self.expert_panel_id is None or (
+                    self.expert_panel_id < 40000 or self.expert_panel_id >= 50000
                 ):
                     raise ValidationError(
                         """Valid GCEP ID's should be in the 40000 number range. 
-                        Please include a valid Curation Panel ID."""
+                        Please include a valid Expert Panel ID."""
                     )
             if self.type == "Variant Curation Expert Panel":
-                if self.curation_panel_id is None or (
-                    self.curation_panel_id < 50000 or self.curation_panel_id >= 60000
+                if self.expert_panel_id is None or (
+                    self.expert_panel_id < 50000 or self.expert_panel_id >= 60000
                 ):
                     raise ValidationError(
                         """Valid VCEP ID's should be in the  50000 number range. 
-                        Please include a valid Curation Panel ID."""
+                        Please include a valid Expert Panel ID."""
                     )
 
 

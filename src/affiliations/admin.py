@@ -134,14 +134,14 @@ class AffiliationsAdmin(ModelAdmin):
     form = AffiliationForm
     search_fields = [
         "affiliation_id",
-        "curation_panel_id",
+        "expert_panel_id",
         "full_name",
         "abbreviated_name",
     ]
     # pylint:disable=duplicate-code
     list_display = [
         "affiliation_id",
-        "curation_panel_id",
+        "expert_panel_id",
         "full_name",
         "abbreviated_name",
         "status",
@@ -152,7 +152,7 @@ class AffiliationsAdmin(ModelAdmin):
     # pylint:disable=duplicate-code
     list_display_links = [
         "affiliation_id",
-        "curation_panel_id",
+        "expert_panel_id",
         "full_name",
         "abbreviated_name",
         "status",
@@ -162,7 +162,7 @@ class AffiliationsAdmin(ModelAdmin):
     inlines = [CoordinatorInlineAdmin, ApproverInlineAdmin, SubmitterInlineAdmin]
 
     def get_readonly_fields(self, request, obj=None):
-        """ID is editable upon creation, afterwards, it is read only"""
+        """Fields that are editable upon creation, afterwards, are read only"""
         # pylint:disable=unused-argument
         if obj is None:
             return [
@@ -170,7 +170,9 @@ class AffiliationsAdmin(ModelAdmin):
             ]
         return [
             "affiliation_id",
-            "curation_panel_id",
+            "expert_panel_id",
+            "type",
+            "clinical_domain_working_group",
             "members",
         ]
 

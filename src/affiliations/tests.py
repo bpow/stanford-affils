@@ -19,7 +19,7 @@ class AffiliationsViewsBaseTestCase(TestCase):
         """Seed the test database with some test data."""
         cls.success_affiliation = {
             "affiliation_id": 10000,
-            "curation_panel_id": 40000,
+            "expert_panel_id": 40000,
             "full_name": "Test Success Result Affil",
             "abbreviated_name": "Successful",
             "status": "Inactive",
@@ -55,7 +55,7 @@ class AffiliationsViewsBaseTestCase(TestCase):
 
         cls.hoenn_affiliation = {
             "affiliation_id": 3,
-            "curation_panel_id": 2003,
+            "expert_panel_id": 2003,
             "full_name": "Hoenn Pokémon",
             "abbreviated_name": "Hoenn",
             "status": "Active",
@@ -152,7 +152,7 @@ class TestInvalidAffilCreateForm(TestCase):
 
         cls.invalid_affil_id_affiliation = {
             "affiliation_id": 2,
-            "curation_panel_id": 40000,
+            "expert_panel_id": 40000,
             "full_name": "Invalid Affil ID Affiliation",
             "abbreviated_name": "Invalid Affil ID",
             "status": "Retired",
@@ -178,7 +178,7 @@ class TestInvalidGCEPCreateForm(TestCase):
 
         cls.invalid_gcep_id_affiliation = {
             "affiliation_id": 10000,
-            "curation_panel_id": 30000,
+            "expert_panel_id": 30000,
             "full_name": "Invalid GCEP ID Affiliation",
             "abbreviated_name": "Invalid GCEP ID",
             "status": "Retired",
@@ -206,7 +206,7 @@ class TestInvalidVCEPCreateForm(TestCase):
 
         cls.invalid_vcep_id_affiliation = {
             "affiliation_id": 10000,
-            "curation_panel_id": 60000,
+            "expert_panel_id": 60000,
             "full_name": "Invalid VCEP ID Affiliation",
             "abbreviated_name": "Invalid VCEP ID",
             "status": "Retired",
@@ -226,7 +226,7 @@ class TestInvalidVCEPCreateForm(TestCase):
 
 class TestInvalidTypeAndIDCreateForm(TestCase):
     """A test class for testing validation error on Independent Curation Group
-    type with a curation_panel_id value"""
+    type with a expert_panel_id value"""
 
     @classmethod
     def test_invalid_type_and_id_creation(cls):
@@ -235,7 +235,7 @@ class TestInvalidTypeAndIDCreateForm(TestCase):
 
         cls.invalid_type_and_id_affiliation = {
             "affiliation_id": 10001,
-            "curation_panel_id": 60000,
+            "expert_panel_id": 60000,
             "full_name": "Invalid Type with ID Affiliation",
             "abbreviated_name": "Invalid Type with ID",
             "status": "Retired",
