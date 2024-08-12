@@ -117,6 +117,8 @@ class AffiliationForm(forms.ModelForm):
         if affil_id is None or full_name is None:
             # Allow Django to handle require field validation error.
             pass
+        if self.instance.pk is not None:
+            return
         if Affiliation.objects.filter(
             affiliation_id=affil_id, expert_panel_id=ep_id
         ).exists():
