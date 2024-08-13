@@ -19,9 +19,9 @@ from unfold.admin import (  # type: ignore
     TabularInline,
 )
 
-from unfold.contrib.filters.admin import (  # type: ignore # pylint: disable-msg=E0611
+from unfold.contrib.filters.admin import (  # type: ignore
     ChoicesDropdownFilter,
-    MultipleChoicesDropdownFilter,
+    MultipleChoicesDropdownFilter,  # pylint: disable-msg=E0611
 )
 
 # In-house code:
@@ -52,8 +52,8 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
         css = {"all": ("css/permissions.css",)}
 
     def get_fieldsets(self, request, obj=None):
-        """Restricts which fields users can view. Superusers are able to
-        view everything and have the option to create other superusers.
+        """Restricts which fields users can view. Superusers are able to 
+        view everything and have the option to create other superusers. 
         While non-superusers have the ability to manage other staff level users."""
         if not obj:
             return self.add_fieldsets
