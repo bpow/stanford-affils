@@ -16,7 +16,11 @@ from unfold.forms import (  # type: ignore
 from unfold.admin import (  # type: ignore
     ModelAdmin,
     TabularInline,
-    UnfoldAdminSelectWidget,
+)
+
+from unfold.contrib.filters.admin import (  # type: ignore
+    ChoicesDropdownFilter,
+    MultipleChoicesDropdownFilter,
 )
 
 # In-house code:
@@ -65,47 +69,6 @@ class AffiliationForm(forms.ModelForm):
 
         fields = "__all__"
         model = Affiliation
-        widgets = {
-            "status": UnfoldAdminSelectWidget(
-                choices=[
-                    ("Active", "Active"),
-                    ("Applying", "Applying"),
-                    ("Inactive", "Inactive"),
-                    ("Retired", "Retired"),
-                ]
-            ),
-            "type": UnfoldAdminSelectWidget(
-                choices=[
-                    ("Variant Curation Expert Panel", "Variant Curation Expert Panel"),
-                    ("Gene Curation Expert Panel", "Gene Curation Expert Panel"),
-                    ("Independent Curation Group", "Independent Curation Group"),
-                ]
-            ),
-            "clinical_domain_working_group": UnfoldAdminSelectWidget(
-                choices=[
-                    ("None", "None"),
-                    ("Cardiovascular", "Cardiovascular"),
-                    ("Hearing Loss", "Hearing Loss"),
-                    ("Hemostasis/Thrombosis", "Hemostasis/Thrombosis"),
-                    ("Hereditary Cancer", "Hereditary Cancer"),
-                    ("Immunology", "Immunology"),
-                    ("Inborn Errors of Metabolism", "Inborn Errors of Metabolism"),
-                    ("Kidney Disease", "Kidney Disease"),
-                    ("Neurodevelopmental Disorders", "Neurodevelopmental Disorders"),
-                    ("Neurological Disorders", "Neurological Disorders"),
-                    ("Ocular", "Ocular"),
-                    ("Other", "Other"),
-                    ("Pulmonary", "Pulmonary"),
-                    ("RASopathy", "RASopathy"),
-                    (
-                        "Rheumatologic Autoimmune Disease",
-                        "Rheumatologic Autoimmune Disease",
-                    ),
-                    ("Skeletal Disorders", "Skeletal Disorders"),
-                    ("Somatic Cancer", "Somatic Cancer"),
-                ]
-            ),
-        }
 
     def clean(self):
         cleaned_data = super().clean()
@@ -156,7 +119,7 @@ class AffiliationForm(forms.ModelForm):
                         "Please include a valid Expert Panel ID."
                     ),
                 )
-            if affil_id - 10000 != affil_id - 40000:
+            if affil_id - 10000 != ep_id - 40000:
                 self.add_error(
                     None,
                     ValidationError(
@@ -172,7 +135,7 @@ class AffiliationForm(forms.ModelForm):
                         "Please include a valid Expert Panel ID."
                     ),
                 )
-            if affil_id - 10000 != affil_id - 50000:
+            if affil_id - 10000 != ep_id - 50000:
                 self.add_error(
                     None,
                     ValidationError(
@@ -233,6 +196,13 @@ class AffiliationsAdmin(ModelAdmin):
         "type",
         "clinical_domain_working_group",
     ]
+    list_filter = [
+        ("status", MultipleChoicesDropdownFilter),
+        ("type", ChoicesDropdownFilter),
+        ("clinical_domain_working_group", ChoicesDropdownFilter),
+    ]
+    list_filter_submit = True  # Submit button at the bottom of filter tab.
+    list_fullwidth = True
     inlines = [CoordinatorInlineAdmin, ApproverInlineAdmin, SubmitterInlineAdmin]
 
     def get_readonly_fields(self, request, obj=None):
