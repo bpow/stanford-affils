@@ -19,9 +19,9 @@ from unfold.admin import (  # type: ignore
     TabularInline,
 )
 
-from unfold.contrib.filters.admin import (  # type: ignore # pylint: disable=no-name-in-module
+from unfold.contrib.filters.admin import (  # type: ignore
     ChoicesDropdownFilter,
-    MultipleChoicesDropdownFilter, 
+    MultipleChoicesDropdownFilter,  # pylint: disable=no-name-in-module
 )
 
 # In-house code:
