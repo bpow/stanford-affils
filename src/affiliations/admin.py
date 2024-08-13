@@ -21,7 +21,7 @@ from unfold.admin import (  # type: ignore
 
 from unfold.contrib.filters.admin import (  # type: ignore
     ChoicesDropdownFilter,
-    MultipleChoicesDropdownFilter,  # pylint: disable-msg=E0611
+    MultipleChoicesDropdownFilter,
 )
 
 # In-house code:
