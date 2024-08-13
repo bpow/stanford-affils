@@ -2,12 +2,58 @@
 
 # Third-party dependencies:
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class AffiliationStatus(models.TextChoices):  # pylint: disable=too-many-ancestors
+    """Creating choices for status."""
+
+    APPLYING = "APPLYING", _("Applying")
+    ACTIVE = "ACTIVE", _("Active")
+    INACTIVE = "INACTIVE", _("Inactive")
+    RETIRED = "RETIRED", _("Retired")
+    ARCHIVED = "ARCHIVED", _("Archived")
+
+
+class AffiliationType(models.TextChoices):  # pylint: disable=too-many-ancestors
+    """Creating choices for type."""
+
+    VCEP = "VCEP", _("Variant Curation Expert Panel")
+    GCEP = "GCEP", _("Gene Curation Expert Panel")
+    INDEPENDENT_CURATION = "INDEPENDENT_CURATION", _("Independent Curation Group")
+
+
+class AffiliationCDWG(models.TextChoices):  # pylint: disable=too-many-ancestors
+    """Creating choices for clinical_domain_working_group."""
+
+    NONE = "NONE", _("None")
+    CARDIOVASCULAR = "CARDIOVASCULAR", _("Cardiovascular")
+    HEARING_LOSS = "HEARING_LOSS", _("Hearing Loss")
+    HEMOSTASIS_THROMBOSIS = "HEMOSTASIS_THROMBOSIS", _("Hemostasis/Thrombosis")
+    HEREDITARY_CANCER = "HEREDITARY_CANCER", _("Hereditary Cancer")
+    IMMUNOLOGY = "IMMUNOLOGY", _("Immunology")
+    INBORN_ERR_METABOLISM = "INBORN_ERR_METABOLISM", _("Inborn Errors of Metabolism")
+    KIDNEY_DISEASE = "KIDNEY_DISEASE", _("Kidney Disease")
+    NEURODEVELOPMENTAL_DISORDER = "NEURODEVELOPMENTAL_DISORDER", _(
+        "Neurodevelopmental Disorders"
+    )
+    NEUROLOGICAL_DISORDERS = "NEUROLOGICAL_DISORDERS", _("Neurological Disorders")
+    OCULAR = "OCULAR", _("Ocular")
+    OTHER = "OTHER", _("Other")
+    PULMONARY = "PULMONARY", _("Pulmonary")
+    RASOPATHY = "RASOPATHY", _("RASopathy")
+    RHEUMA_AUTO_DISEASE = "RHEUMA_AUTO_DISEASE", _("Rheumatologic Autoimmune Disease")
+    SKELETAL_DISORDERS = "SKELETAL_DISORDERS", _("Skeletal Disorders")
+    SOMATIC_CANCER = "SOMATIC_CANCER", _("Somatic Cancer")
 
 
 class Affiliation(models.Model):
     """Define the shape of an affiliation."""
 
-    type: models.CharField = models.CharField()
+    type: models.CharField = models.CharField(
+        verbose_name="Type",
+        choices=AffiliationType.choices,
+    )
     """
     10000 ID. All affiliations will have this ID, however, some affiliations
     will share this ID. Affiliations that share this ID will have different
@@ -31,9 +77,13 @@ class Affiliation(models.Model):
     abbreviated_name: models.CharField = models.CharField(
         blank=True, null=True, verbose_name="Abbreviated Name"
     )
-    status: models.CharField = models.CharField()
+    status: models.CharField = models.CharField(
+        verbose_name="Status",
+        choices=AffiliationStatus.choices,
+    )
     clinical_domain_working_group: models.CharField = models.CharField(
-        verbose_name="CDWG"
+        verbose_name="CDWG",
+        choices=AffiliationCDWG.choices,
     )
     members: models.CharField = models.CharField()
 
