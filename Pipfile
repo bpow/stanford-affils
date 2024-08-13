@@ -18,7 +18,6 @@ mdformat = "0.*"
 mypy = "==1.*"
 pylint = "==3.*"
 python-dotenv = "==1.*"
-astroid = "==3.2.*"
 
 [requires]
 python_version = "3.12"
