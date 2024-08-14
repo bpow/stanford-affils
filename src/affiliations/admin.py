@@ -195,12 +195,16 @@ class AffiliationsAdmin(ModelAdmin):
     """Configure the affiliations admin panel."""
 
     form = AffiliationForm
+
+    # Controls which fields are searchable via the search bar.
     search_fields = [
         "affiliation_id",
         "expert_panel_id",
         "full_name",
         "abbreviated_name",
     ]
+
+    # Controls what fields are listed in overview header.
     # pylint:disable=duplicate-code
     list_display = [
         "affiliation_id",
@@ -212,6 +216,7 @@ class AffiliationsAdmin(ModelAdmin):
         "clinical_domain_working_group",
     ]
 
+    # Controls what columns are "clickable" to enter detailed view.
     # pylint:disable=duplicate-code
     list_display_links = [
         "affiliation_id",
@@ -222,6 +227,8 @@ class AffiliationsAdmin(ModelAdmin):
         "type",
         "clinical_domain_working_group",
     ]
+
+    # Controls what fields can be filtered on.
     list_filter = [
         ("status", MultipleChoicesDropdownFilter),
         ("type", ChoicesDropdownFilter),
@@ -229,20 +236,36 @@ class AffiliationsAdmin(ModelAdmin):
     ]
     list_filter_submit = True  # Submit button at the bottom of filter tab.
     list_fullwidth = True
+
+    # Controls the visual order of fields listed.
+    fields = (
+        "affiliation_id",
+        "expert_panel_id",
+        "type",
+        "full_name",
+        "abbreviated_name",
+        "status",
+        "clinical_domain_working_group",
+        "members",
+    )
     inlines = [CoordinatorInlineAdmin, ApproverInlineAdmin, SubmitterInlineAdmin]
 
     def get_readonly_fields(self, request, obj=None):
         """Fields that are editable upon creation, afterwards, are read only"""
-        # pylint:disable=unused-argument
-        if obj is None:
-            return [
-                "members",
-            ]
+        # If the affiliation has not been created (is new) only return Members as read only
+        # Otherwise, check to see if user has the staff role and is not a superuser,
+        # Then return the full list of read only fields.
+        # This allows superusers to edit these fields in the case of affiliation creation error.
+        if obj is not None:
+            if request.user.is_staff and not request.user.is_superuser:
+                return [
+                    "affiliation_id",
+                    "expert_panel_id",
+                    "type",
+                    "clinical_domain_working_group",
+                    "members",
+                ]
         return [
-            "affiliation_id",
-            "expert_panel_id",
-            "type",
-            "clinical_domain_working_group",
             "members",
         ]
 
