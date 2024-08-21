@@ -21,6 +21,7 @@ class AffiliationType(models.TextChoices):  # pylint: disable=too-many-ancestors
     VCEP = "VCEP", _("Variant Curation Expert Panel")
     GCEP = "GCEP", _("Gene Curation Expert Panel")
     INDEPENDENT_CURATION = "INDEPENDENT_CURATION", _("Independent Curation Group")
+    SC_VCEP = "SC_VCEP", _("Somatic Cancer Variant Curation Expert Panel")
 
 
 class AffiliationCDWG(models.TextChoices):  # pylint: disable=too-many-ancestors
@@ -70,7 +71,8 @@ class Affiliation(models.Model):
     expert_panel_id: models.IntegerField = models.IntegerField(
         blank=True,
         null=True,
-        help_text="GCEP or VCEP ID. If Independent Curation Group, leave this field blank.",
+        help_text="GCEP or VCEP ID. If Independent Curation Group or SC-VCEP, "
+        "leave this field blank.",
         verbose_name="Expert Panel ID",
     )
     full_name: models.CharField = models.CharField(verbose_name="Full Name")
