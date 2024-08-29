@@ -36,6 +36,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["affils.clinicalgenome.org"]
 
+CSRF_TRUSTED_ORIGINS = ["https://affils.clinicalgenome.org"]
+
+
 INSTALLED_APPS = [
     "unfold",
     "unfold.contrib.filters",
