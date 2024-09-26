@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8a22f23f6474294423fff072b75a03c3783bcf1b3d15675dbae05e19b21e6cf5"
+            "sha256": "6f1e7383db8adb2ee5a5fa3a193b71d3e4ff1d1f19e395988d063a83d7654afa"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -587,6 +587,7 @@
                 "sha256:78e3764488fdfd2695f12502136548ec22f8d4b1780541a835042b8238d11514",
                 "sha256:c2502f5ecbae50c68f9a86d52b5b2447d8648fd205036dad0ccb41e19a445927"
             ],
+            "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==5.0.4"
         },
@@ -765,6 +766,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==0.5.1"
+        },
+        "tomli": {
+            "hashes": [
+                "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
+                "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
+            ],
+            "markers": "python_version < '3.11'",
+            "version": "==2.0.1"
         },
         "tomlkit": {
             "hashes": [
