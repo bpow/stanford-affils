@@ -8,6 +8,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.db import transaction
 
 from unfold.forms import (  # type: ignore
     AdminPasswordChangeForm,
@@ -96,82 +97,89 @@ class AffiliationForm(forms.ModelForm):
         fields = "__all__"
         model = Affiliation
 
-    def clean(self):
-        cleaned_data = super().clean()
+    def _handle_clean_affiliation_id(self, cleaned_data):
+        """Clean and set Affiliation ID based on affil ID type."""
+        affil_id = cleaned_data.get("affiliation_id")
+
+        existing_affil_ids = (
+            Affiliation.objects.select_for_update()
+            .values_list("affiliation_id", flat=True)
+            .order_by("affiliation_id")
+        )
+
+        last_ind = existing_affil_ids.count()
+        if last_ind:
+            affil_id = existing_affil_ids[last_ind - 1] + 1
+        else:
+            affil_id = 10000
+        cleaned_data["affiliation_id"] = affil_id
+        if affil_id < 10000 or affil_id >= 20000:
+            self.add_error(
+                None,
+                ValidationError("Affiliation ID out of range. Contact administrator."),
+            )
+
+    def _handle_clean_type(self, cleaned_data):
+        """Clean and set EP ID based on Type and Affiliation ID."""
         affil_id = cleaned_data.get("affiliation_id")
         ep_id = cleaned_data.get("expert_panel_id")
         _type = cleaned_data.get("type")
-        full_name = cleaned_data.get("full_name")
 
-        if affil_id is None or full_name is None:
-            # Allow Django to handle require field validation error.
-            pass
+        if _type == "VCEP":
+            ep_id = (affil_id - 10000) + 50000
+            cleaned_data["expert_panel_id"] = ep_id
+            if ep_id < 50000 or ep_id >= 60000:
+                self.add_error(
+                    None,
+                    ValidationError("VCEP ID out of range. Contact administrator."),
+                )
+        elif _type == "SC_VCEP":
+            ep_id = (affil_id - 10000) + 50000
+            cleaned_data["expert_panel_id"] = ep_id
+            cleaned_data["clinical_domain_working_group"] = "SOMATIC_CANCER"
+            if ep_id < 50000 or ep_id >= 60000:
+                self.add_error(
+                    None,
+                    ValidationError("SC-VCEP ID out of range. Contact administrator."),
+                )
+        elif _type == "GCEP":
+            ep_id = (affil_id - 10000) + 40000
+            cleaned_data["expert_panel_id"] = ep_id
+            if ep_id < 40000 or ep_id >= 50000:
+                self.add_error(
+                    None,
+                    ValidationError("GCEP ID out of range. Contact administrator."),
+                )
+        else:
+            cleaned_data["expert_panel_id"] = None
+
+    @transaction.atomic
+    def clean(self):
+        cleaned_data = super().clean()
+        # If the primary key already exists, return cleaned_data.
         if self.instance.pk is not None:
-            return
-        if Affiliation.objects.filter(
-            affiliation_id=affil_id, expert_panel_id=ep_id
-        ).exists():
+            return cleaned_data
+
+        self._handle_clean_affiliation_id(cleaned_data)
+        self._handle_clean_type(cleaned_data)
+
+        # Check to see if the Affil and EP ID already exist in DB.
+        if (
+            Affiliation.objects.select_for_update()
+            .filter(
+                affiliation_id=cleaned_data.get("affiliation_id"),
+                expert_panel_id=cleaned_data.get("expert_panel_id"),
+            )
+            .exists()
+        ):
             self.add_error(
                 None,
                 ValidationError(
-                    "This Affiliation ID and Expert Panel ID pair already exist."
+                    "This Affiliation ID with this Expert Panel ID already exist."
                 ),
             )
-        if (
-            _type
-            in (
-                "SC_VCEP",
-                "INDEPENDENT_CURATION",
-            )
-            and ep_id is not None
-        ):
-            self.add_error(
-                "expert_panel_id",
-                ValidationError(
-                    "If type Independent Curation Group or SC-VCEP is selected, "
-                    "Expert Panel ID must be left blank."
-                ),
-            )
-        if affil_id < 10000 or affil_id >= 20000:
-            self.add_error(
-                "affiliation_id",
-                ValidationError(
-                    "Valid Affiliation ID's should be in the 10000 number range. "
-                    "Please include a valid Affiliation ID."
-                ),
-            )
-        if _type == "GCEP":
-            if ep_id is None or (ep_id < 40000 or ep_id >= 50000):
-                self.add_error(
-                    "expert_panel_id",
-                    ValidationError(
-                        "Valid GCEP ID's should be in the 40000 number range. "
-                        "Please include a valid Expert Panel ID."
-                    ),
-                )
-            elif affil_id - 10000 != ep_id - 40000:
-                self.add_error(
-                    None,
-                    ValidationError(
-                        "The Affiliation ID and Expert Panel ID do not match."
-                    ),
-                )
-        if _type == "VCEP":
-            if ep_id is None or (ep_id < 50000 or ep_id >= 60000):
-                self.add_error(
-                    "expert_panel_id",
-                    ValidationError(
-                        "Valid VCEP ID's should be in the  50000 number range. "
-                        "Please include a valid Expert Panel ID."
-                    ),
-                )
-            elif affil_id - 10000 != ep_id - 50000:
-                self.add_error(
-                    None,
-                    ValidationError(
-                        "The Affiliation ID and Expert Panel ID do not match."
-                    ),
-                )
+
+        return cleaned_data
 
 
 class CoordinatorInlineAdmin(TabularInline):
@@ -305,11 +313,18 @@ class AffiliationsAdmin(ModelAdmin):
             "members",
         ]
 
+    def render_change_form(self, request, context, *args, obj=None, **kwargs):
+        if obj is None:
+            context["media"] += forms.Media(
+                js=["js/admin_hide_attribute_new.js"],
+            )
+        return super().render_change_form(request, context, *args, obj=None, **kwargs)
+
 
 # Add models we want to be able to edit in the admin interface.
 admin.site.register(Affiliation, AffiliationsAdmin)
 
 # Change the admin site's display name.
-admin.site.site_title = "Affils Service"
+admin.site.site_title = "Affiliation Service"
 admin.site.site_header = "Affiliation Service Panel"
 admin.site.index_title = "Welcome to the ClinGen Affiliation Service Portal"
