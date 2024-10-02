@@ -152,6 +152,7 @@ class AffiliationForm(forms.ModelForm):
                 )
         else:
             cleaned_data["expert_panel_id"] = None
+            cleaned_data["clinical_domain_working_group"] = "NONE"
 
     @transaction.atomic
     def clean(self):
