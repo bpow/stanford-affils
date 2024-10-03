@@ -1,13 +1,27 @@
 # Tutorials
 
+Description from
+[Divio documentation](https://docs.divio.com/documentation-system/tutorials/):
+
+Tutorials are lessons that take the reader through a series of steps to complete
+a project of some kind. This page is learning-oriented, and specifically,
+oriented towards learning how rather than learning what.
+
 ## Get started
 
-1. Install Python 3.12+.
-2. Install [Pipenv](https://pipenv.pypa.io/en/latest/index.html):
-   `pip install --user pipenv`.
-3. Activate a virtual environment: `pipenv shell`.
-4. Install dependencies: `pipenv sync --dev`.
-5. Create a `.env` file based on `.env.template`.
-6. Seed the database: `inv dbseed`.
-7. Run the development server: `inv dev`.
-8. Install [yamlfmt](https://github.com/google/yamlfmt): `brew install yamlfmt`
+- Install Python 3.10+.
+- Install [Pipenv](https://pipenv.pypa.io/en/latest/index.html):
+  `pip install --user pipenv`.
+- Activate a virtual environment: `pipenv shell`.
+- Install dependencies: `pipenv sync --dev`.
+- Create a `.env` file based on `.env.template`.
+- [Set up Postgres for local development](./howto.md#set-up-postgres-for-local-development).
+- Run the development server: `cd src`, then `python manage.py migrate`.
+- Run the development server: `cd src`, then `python manage.py runserver`.
+- Install [yamlfmt](https://github.com/google/yamlfmt): `brew install yamlfmt`.
+
+## Running the load.py script to import CSV data into the database
+
+- Make sure all dependencies are synced: `pipenv sync --dev`.
+- Save CSV into `scripts` folder in directory.
+- Run `python manage.py runscript load`.
