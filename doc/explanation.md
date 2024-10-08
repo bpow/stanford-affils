@@ -19,12 +19,17 @@ We use
 to style the Django admin panel.
 
 ## Architecture Decision Records (ADRs)
-We utilize ADRs documentation to make it easier for future contributors to understand our reasons for implementation choices and rationale.
+
+We utilize ADRs documentation to make it easier for future contributors to
+understand our reasons for implementation choices and rationale.
 
 For more information on ADRs, please visit some of the below resources:
+
 - https://www.redhat.com/architect/architecture-decision-records
 - https://adr.github.io/
 
-We are utilizing [adr-tools-python](https://pypi.org/project/adr-tools-python/), additional information can be found in their documentation.
+We are utilizing [adr-tools-python](https://pypi.org/project/adr-tools-python/),
+additional information can be found in their documentation.
+
 - Can create a new ADR by using `adr-new {name of adr}`.
 - Can utilize `adr-list` to see a list of all ADRs in the terminal.
