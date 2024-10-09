@@ -23,6 +23,8 @@ to style the Django admin panel.
 We utilize ADRs documentation to make it easier for future contributors to
 understand our reasons for implementation choices and rationale.
 
+Please utilize is the template in [Documenting architecture decisions - Michael Nygard](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions), and also [documented in github here](https://github.com/joelparkerhenderson/architecture-decision-record/blob/main/locales/en/templates/decision-record-template-by-michael-nygard/index.md).
+
 For more information on ADRs, please visit some of the below resources:
 
 - https://www.redhat.com/architect/architecture-decision-records

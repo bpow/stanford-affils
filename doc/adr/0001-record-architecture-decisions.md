@@ -1,13 +1,10 @@
-<!-- This is the template in Documenting architecture decisions - Michael Nygard link: https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions -->
-
 # 1. Record architecture decisions
 
 Date: 2024-10-08
 
 ## Status
 
-What is the status, such as proposed, accepted, rejected, deprecated,
-superseded, etc.?
+Accepted
 
 ## Context
 
