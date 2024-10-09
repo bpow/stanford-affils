@@ -18,25 +18,27 @@ that have been made thus far in this project.
 
 #### Use Django and Django Admin.
 
-Previously, a Web 1.0 Python application was being built to create this
-microservice. It was felt that utilizing Django and the built in Admin service
-could easily support the projected user base size of the Affiliations
-Microservice and it would increase the speed of delivery on this project. It was
-also a benefit that it was another Python framework and a tool being utilized on
-another project on the team to create cross over skills.
+Previously, we were using Flask to implement a simple web application, and we
+were building our own custom HTML templates. Then we then decided that Django's
+admin panel had most of what we needed in terms of UI. It was felt that
+utilizing Django's built-in admin site could easily support the projected user
+base size of the Affiliations Microservice and it would increase the speed of
+delivery on this project. It was also a benefit that it was another Python
+framework and a tool being utilized on another project on the team to create
+cross over skills.
 
 Although it is not recommended to base your website solely on the built-in admin
-service, since this is going to be a small internal tool to replace a
-spreadsheet and JSON files, that will later be mostly handled by API request via
-the GPM we felt that it would serve our purposes; we acknowledged that the
-recommendations and limitations that would be brought on by building our service
-solely on top of the built-in Django Admin service tool.
+site, since this is going to be a small internal tool to replace a spreadsheet
+and JSON files, that will later be mostly handled by API request via the GPM we
+felt that it would serve our purposes; we acknowledged that the recommendations
+and limitations that would be brought on by building our service solely on top
+of the built-in Django admin site.
 
-#### Using PostgresSQL
+#### Using PostgreSQL
 
-We were interested in a relational database management system and PostgresSQL
-has many features that are supported by Django. Postgres is also recommended as
-the database back-end by the creators of Django.
+We were interested in a relational database management system and PostgreSQL has
+many features that are supported by Django. Postgres is also recommended as the
+database back-end by the creators of Django.
 
 #### Using Unfold Admin
 
@@ -49,8 +51,8 @@ it was well supported and the community seemed active surrounding it.
 
 #### Using Custom JS
 
-Our goal in this project is to not make it too overly complex. It is meant to be
-a simple internal tool and we want the design to reflect that. So creating a
+Our goal in this project is to not make it overly complex. It is meant to be a
+simple internal tool and we want the design to reflect that. So creating a
 custom and slightly more complex design choice was weighed heavily before
 implementation. This choice was to make it easier for users to create new
 Affiliations and automate as many choices as possible for them.
@@ -78,8 +80,9 @@ which option to move forward with.
 
 ## Consequences
 
-Since we built directly on top of the Django Admin built in service, we have
-limited ourselves in some way to how easy/difficult it will be to make certain
-changes and customizations based on user feedback. We weighed this against the
-projected user pool for this application and the reality that many of these
-manual user inputs will be done via API in later iterations.
+Since we built directly on top of the Django admin site, we have limited
+ourselves in some way to how easy/difficult it will be to make certain changes
+and customizations based on user feedback. In addition, adding custom UI should
+not be a difficult task in future iterations if it is needed. We weighed this
+against the projected user pool for this application and the reality that many
+of these manual user inputs will be done via API in later iterations.
