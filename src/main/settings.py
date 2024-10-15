@@ -208,9 +208,7 @@ CRONJOBS = [
 # Logging and Cloudwatch
 logger_boto3_session = boto3.client(
     "logs",
-    # aws_access_key_id = os.environ.get("AFFILS_AWS_ACCESS_KEY"),
-    # aws_secret_access_key = os.environ.get("AFFILS_AWS_SECRET_KEY"),
-    region_name=os.environ.get("AFFILS_AWS_REGION"),
+    region_name=os.environ.get("AWS_DEFAULT_REGION"),
 )
 
 LOGGING = {
