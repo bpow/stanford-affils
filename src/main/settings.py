@@ -208,7 +208,7 @@ CRONJOBS = [
 # Logging and Cloudwatch
 logger_boto3_session = boto3.client(
     "logs",
-    region_name=os.environ.get("AWS_DEFAULT_REGION"),
+    region_name="us-west-2",
 )
 
 LOGGING = {
