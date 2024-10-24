@@ -77,6 +77,27 @@ For:
 https://github.com/org/repo/issues/123
 ```
 
+### Conventional Commits
+
+We are following the 
+[Conventional Commits specifications](https://www.conventionalcommits.org/en/v1.0.0/) 
+for creating commit histories. See the tags and structure below:
+
+- **fix:** patches a bug in your codebase.
+- **feat:** introduces a new feature to the codebase.
+- **BREAKING CHANGE:** a commit that has a footer BREAKING CHANGE:, or 
+appends a ! after the type/scope, introduces a breaking API change. 
+A BREAKING CHANGE can be part of commits of any type.
+- **build:** changes that affect the build system or external dependencies.
+- **chore:** updates an internal task, no production code change.
+- **ci:** changes to the CI configuration files and scripts.
+- **docs:** documentation only changes.
+- **style:** changes that do not affect the meaning of the code 
+(white-space, formatting, missing semi-colons, etc).
+- **refactor:** changes that neither fixes a bug nor adds a feature.
+- **perf:** changes that improves performance.
+- **test:** adds missing tests or correcting existing tests.
+
 ### Name a Git Branch
 
 Here is the format we like to follow for branch names:
