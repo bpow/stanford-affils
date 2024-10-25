@@ -28,7 +28,7 @@ inv check
 
 Invoke provides a high level API for running shell commands and
 defining/organizing task functions from the `tasks.py` file. Invoke may be
-executed as invoke (or inv for short).
+executed as `invoke` (or `inv` for short).
 
 You can see the list of our available invocations in our
 [`tasks.py` file](../tasks.py) or by running `invoke --list` in your terminal.
