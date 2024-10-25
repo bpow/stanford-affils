@@ -18,11 +18,24 @@ Code should be:
 3. type-checked using [mypy](https://mypy-lang.org/), and
 4. tested using [Pytest](https://github.com/pytest-dev/pytest/).
 
-To run these checks:
+To run these checks (see below for more information about Invoke):
 
 ```
 inv check
 ```
+
+### Utilizing Invoke
+
+Invoke provides a high level API for running shell commands and
+defining/organizing task functions from the `tasks.py` file. Invoke may be
+executed as `invoke` (or `inv` for short).
+
+You can see the list of our available invocations in our
+[`tasks.py` file](../tasks.py) or by running `invoke --list` in your terminal.
+
+More information can be found in the
+[Invoke documentation here](https://www.pyinvoke.org/) and the
+[getting started documentation here](https://docs.pyinvoke.org/en/stable/getting-started.html).
 
 ## Write Code That Can Be Submitted to the Main Branch
 
