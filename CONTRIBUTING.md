@@ -36,6 +36,10 @@ detailed descriptions so our developers can investigate further.
   creating your PR.
 - Smaller is better! A PR should preferably contain isolated changes
   pertaining to a single bug fix or feature request.
+- When merging a PR, please 
+[squash and merge](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits) 
+your commits into a single commit. This is so that all commits are 
+combined into one commit then merged to the main branch.
 - Please follow the below coding style and conventions:
 
 ### Write a TODO comment
