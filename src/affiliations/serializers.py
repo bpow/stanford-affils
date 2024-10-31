@@ -67,7 +67,6 @@ class AffiliationSerializer(serializers.ModelSerializer):
             "approvers",
             "coordinators",
             "clinvar_submitter_ids",
-            "is_deleted",
         ]
 
     def create(self, validated_data):
@@ -106,8 +105,6 @@ class AffiliationSerializer(serializers.ModelSerializer):
         instance.type = validated_data.CharField()
         instance.clinical_domain_working_group = validated_data.CharField()
         instance.members = validated_data.CharField()
-        instance.is_deleted = validated_data.BooleanField()
-
         instance.save()
 
         coordinators.coordinator_name = coordinator_data.get(
