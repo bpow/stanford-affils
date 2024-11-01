@@ -11,8 +11,11 @@ Follow steps outlined in [tutorial.md](
 doc/tutorial.md/#running-the-loadpy-script-to-import-csv-data-into-the-database).
 """
 
+from pathlib import Path
 import csv
 from affiliations.models import Affiliation, Submitter, Coordinator
+
+FILEPATH = Path(__file__).parent / "Affiliations - VCI_GCI Affiliation List.csv"
 
 
 def run():  # pylint: disable-msg=too-many-locals
@@ -20,7 +23,7 @@ def run():  # pylint: disable-msg=too-many-locals
     objects in the DB."""
 
     with open(
-        "/Users/gabriellasanchez/Desktop/repos/stanford-affils/src/scripts/test_affils.csv",
+        FILEPATH,
         encoding="utf-8",
     ) as file:
         csv_reader = csv.DictReader(file)
@@ -37,6 +40,8 @@ def run():  # pylint: disable-msg=too-many-locals
             gcep_full_name = row["GCEP Affiliation Name"].strip()
             status = row["Status"].strip()
             cdwg = row["CDWG"].strip()
+            is_deleted = row["is_deleted"].strip()
+            is_deleted = is_deleted_value(is_deleted)
 
             coordinator_names = coordinator_name.split(",")
             coordinator_emails = coordinator_email.split(",")
@@ -60,6 +65,7 @@ def run():  # pylint: disable-msg=too-many-locals
                     full_name=name,
                     status=status,
                     clinical_domain_working_group=cdwg,
+                    is_deleted=is_deleted,
                 )
                 if clinvar_submitter_id != "":
                     Submitter.objects.create(
@@ -80,3 +86,8 @@ def run():  # pylint: disable-msg=too-many-locals
                             affiliation=affil,
                             coordinator_name=coordinator_names[i],
                         )
+
+
+def is_deleted_value(is_deleted):
+    """Return is_deleted boolean value."""
+    return is_deleted == "TRUE"
