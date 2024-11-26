@@ -37,7 +37,8 @@ DEBUG = False
 ALLOWED_HOSTS = ["affils.clinicalgenome.org", "affils-test.clinicalgenome.org"]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3001",
+    "https://curation.clinicalgenome.org",
+    "https://curation-test.clinicalgenome.org",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
