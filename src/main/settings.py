@@ -36,6 +36,11 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["affils.clinicalgenome.org", "affils-test.clinicalgenome.org"]
 
+CORS_ALLOWED_ORIGINS = [
+    "https://curation.clinicalgenome.org",
+    "https://curation-test.clinicalgenome.org",
+]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://affils.clinicalgenome.org",
     "https://affils-test.clinicalgenome.org",
@@ -58,9 +63,11 @@ INSTALLED_APPS = [
     "django_extensions",
     "dbbackup",  # django-dbbackup
     "django_crontab",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",

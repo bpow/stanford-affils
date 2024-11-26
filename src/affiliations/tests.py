@@ -3,6 +3,7 @@
 # Third-party dependencies:
 from unittest import mock
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from django.core.exceptions import ValidationError
 from rest_framework.test import APIRequestFactory
@@ -183,6 +184,8 @@ class AffiliationsViewsBaseTestCase(TestCase):
     def test_detail_affiliation_json_call(self):
         """Make sure the API response of a single affiliation is returned
         in the original JSON format ."""
+        _ = User.objects.create_user(username="test_user", password="secret")
+        self.client.login(username="test_user", password="secret")
         response = self.client.get("/api/affiliation_detail/?affil_id=10000")
         self.assertEqual(
             response.json(),
@@ -207,6 +210,8 @@ class AffiliationsViewsBaseTestCase(TestCase):
     def test_list_affiliation_json_call(self):
         """Make sure the API response of all the affiliations in the db is
         returned in the original JSON format ."""
+        _ = User.objects.create_user(username="test_user", password="secret")
+        self.client.login(username="test_user", password="secret")
         response = self.client.get("/api/affiliations_list/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 2)

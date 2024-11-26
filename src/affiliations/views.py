@@ -4,6 +4,7 @@
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 # In-house code:
 from affiliations.models import Affiliation, Approver
@@ -26,6 +27,7 @@ class AffiliationsDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AffiliationSerializer
 
 
+@login_required
 @api_view(["GET"])
 def affiliations_list_json_format(request):  # pylint: disable=unused-argument
     """List all affiliations in old JSON format."""
@@ -68,6 +70,7 @@ def affiliations_list_json_format(request):  # pylint: disable=unused-argument
     return JsonResponse(list(response_obj.values()), status=200, safe=False)
 
 
+@login_required
 @api_view(["GET"])
 def affiliation_detail_json_format(request):
     """List specific affiliation in old JSON format."""
