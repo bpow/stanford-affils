@@ -31,6 +31,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret.
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
+# API Key Header setting
+API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
+
 # SECURITY WARNING: Don't run with debug turned on in production.
 DEBUG = False
 
@@ -39,6 +42,12 @@ ALLOWED_HOSTS = ["affils.clinicalgenome.org", "affils-test.clinicalgenome.org"]
 CORS_ALLOWED_ORIGINS = [
     "https://curation.clinicalgenome.org",
     "https://curation-test.clinicalgenome.org",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    "x-api-key",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -58,6 +67,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_api_key",
     "affiliations",
     "django_admin_logs",
     "django_extensions",
