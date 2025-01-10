@@ -89,7 +89,8 @@ def affiliations_list_json_format(request):  # pylint: disable=unused-argument
         if approvers_queryset and "approver" not in response_obj[affil_id]:
             response_obj[affil_id]["approver"] = []
         for name in approvers_queryset:
-            response_obj[affil_id]["approver"].append(name)
+            if name not in response_obj[affil_id]["approver"]:
+                response_obj[affil_id]["approver"].append(name)
 
     return JsonResponse(
         list(response_obj.values()),
@@ -163,7 +164,8 @@ def affiliation_detail_json_format(request):
         if approvers_queryset and "approver" not in response_obj[affil_id]:
             response_obj[affil_id]["approver"] = []
         for name in approvers_queryset:
-            response_obj[affil_id]["approver"].append(name)
+            if name not in response_obj[affil_id]["approver"]:
+                response_obj[affil_id]["approver"].append(name)
     return JsonResponse(
         list(response_obj.values()),
         status=200,
